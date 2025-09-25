@@ -1,3 +1,13 @@
+<?php
+    /*
+    fazer um código para que procure o manhwa ou mangá e coloque os dados dele ai, caso queria atualizar algo peça para inserir os novos dados (cap e data ou atualizar o hiato)
+    */
+    if($_SERVER['REQUEST_METHOD'] === "POST"){
+
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,21 +20,16 @@
     <div class="container">
         <div class="conteudo">
             <h1>Pesquisar</h1><br>
-            <form>
+            <form method="post">
                 <label for="nome">Nome:</label><br>
                 <input type="text" id="nome" name="nome"><br><br>
-                <input type="button" value="Pesquisar">
+                <input type="submit" value="Pesquisar">
                 <input type="button" value="Limpar">
             </form>
 
         </div>
     </div>
 
-<?php
-    /*
-    fazer um código para que procure o manhwa ou mangá e coloque os dados dele ai, caso queria atualizar algo peça para inserir os novos dados (cap e data ou atualizar o hiato)
-    
-    */
-?>
+
 </body>
 </html>
