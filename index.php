@@ -3,7 +3,7 @@
     fazer um código para que procure o manhwa ou mangá e coloque os dados dele ai, caso queria atualizar algo peça para inserir os novos dados (cap e data ou atualizar o hiato)
     */
     if($_SERVER['REQUEST_METHOD'] === "POST"){
-
+        $nome = $_POST['nome'] ?? '';
     }
 
 ?>
