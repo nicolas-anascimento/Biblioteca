@@ -1,9 +1,17 @@
 <?php
-    /*
-    fazer um código para que procure o manhwa ou mangá e coloque os dados dele ai, caso queria atualizar algo peça para inserir os novos dados (cap e data ou atualizar o hiato)
-    */
+    $msg = '';
+    $resultado = [];
+    include("server.php");
+
     if($_SERVER['REQUEST_METHOD'] === "POST"){
         $nome = $_POST['nome'] ?? '';
+        pesquisar($nome);
+        global $msg;
+        $msg = 'f';
+    }
+    echo gettype($resultado);
+    for($x=0;$x<count($resultado);$x++){
+        echo $resultado[$x];
     }
 
 ?>
@@ -30,6 +38,12 @@
         </div>
     </div>
 
+    <script>
+        let msg = "<?php echo $msg; ?>"
+        //let resultado = "<?php echo $resultado; ?>"
+        console.log(msg)
+        //console.log(resultado)
+    </script>
 
 </body>
 </html>
