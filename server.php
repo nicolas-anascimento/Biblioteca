@@ -4,38 +4,28 @@
     $senha = "";
     $banco = "leitura";
 
-    $conn = new mysqli($servidor, $usuario, $senha, $banco);
+    $conn = mysqli_connect($servidor, $usuario, $senha, $banco);
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    if ($conn->connect_error){
-        die("");
-        $msg = "Error na conexão: ". $conn->connect_error;
-    } else {
-        $msg = "Funcionando!";
+    if(!$conn){
+        die("Falha na conexão: " . mysqli_connect_error());
     }
-
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-$resultado = [];
-    function pesquisar($nome){
-        global $conn, $resultado;
-        $sql = "SELECT * from manga where nome like '%$nome%'";
-        $res = $conn->query($sql);
-
-        if($res && $res->num_rows > 0){
-            while($row = $res->fetch_assoc()){
-                $resultado[] = $row;
-            }
-        }
-    }
 
 /* 
+
+CREATE DATABASE IF NOT EXISTS leitura;
+
+use leitura;
+
 create TABLE manga(
-    ID int PRIMARY KEY AUTO_INCREMENT,
-	Nome varchar(200),
-	Cap float,
-	Scan varchar(50),
-	Hiato boolean,
-	Dataa date,
+    id int PRIMARY KEY AUTO_INCREMENT,
+	nome varchar(200),
+	cap float,
+	scan varchar(50),
+	hiato boolean,
+	dataa date,
 	url varchar(2083)
 )
 
