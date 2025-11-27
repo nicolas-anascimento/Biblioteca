@@ -1,12 +1,4 @@
 <?php
-    $manga = [
-        'id' => '',
-        'nome' => '',
-        'cap' => '',
-        'scan' => '',
-        'hiato' => '',
-        'dataa' => ''
-    ];
     require "server.php";
 
     if($_SERVER['REQUEST_METHOD'] === "POST"){
@@ -42,7 +34,7 @@
                 <input type="text" id="nome" name="nome"><br><br>
                 <input type="submit" value="Pesquisar">
                 <input type="button" value="todos" id="mostrar" onclick="mostrarTodos()">
-                <input type="button" value="Limpar" id="limpar" onclick="limpar()">
+                <input type="button" value="Limpar" id="limpar_" onclick="limpar()">
             </form>
         <table>
             <thead>
@@ -91,7 +83,7 @@
         function limpar(){
             document.getElementById("nome").value = "";
             document.querySelector("form").submit();
-        }
+        };
     </script>
 
 </body>
