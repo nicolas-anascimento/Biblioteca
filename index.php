@@ -10,11 +10,16 @@
     require "server.php";
 
     if($_SERVER['REQUEST_METHOD'] === "POST"){
-        $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
-        if($nome !== ''){
-            $nome = mysqli_real_escape_string($conn, $nome);
-            $sql = "SELECT * FROM manga WHERE nome = '$nome'";
+        if($_POST['nome'] === "--todos--"){
+            $sql = "SELECT * FROM manga";
             $result = mysqli_query($conn, $sql);
+        } else {
+            $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
+            if($nome !== ''){
+                $nome = mysqli_real_escape_string($conn, $nome);
+                $sql = "SELECT * FROM manga WHERE nome = '$nome'";
+                $result = mysqli_query($conn, $sql);
+            }
         }
     }
 
@@ -36,7 +41,8 @@
                 <label for="nome">Nome:</label><br>
                 <input type="text" id="nome" name="nome"><br><br>
                 <input type="submit" value="Pesquisar">
-                <input type="button" value="Limpar" onclick="limparformulario()">
+                <input type="button" value="todos" id="mostrar" onclick="mostrarTodos()">
+                <input type="button" value="Limpar" id="limpar" onclick="limpar()">
             </form>
         <table>
             <thead>
@@ -77,7 +83,15 @@
     </div>
 
     <script>
+        function mostrarTodos(){
+            document.getElementById("nome").value = "--todos--";
+            document.querySelector("form").submit();
+        }
 
+        function limpar(){
+            document.getElementById("nome").value = "";
+            document.querySelector("form").submit();
+        }
     </script>
 
 </body>
