@@ -10,11 +10,16 @@
     require "server.php";
 
     if($_SERVER['REQUEST_METHOD'] === "POST"){
-        $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
-        if($nome !== ''){
-            $nome = mysqli_real_escape_string($conn, $nome);
-            $sql = "SELECT * FROM manga WHERE nome = '$nome'";
+        if($_POST['nome'] === "--todos--"){
+            $sql = "SELECT * FROM manga";
             $result = mysqli_query($conn, $sql);
+        } else {
+            $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
+            if($nome !== ''){
+                $nome = mysqli_real_escape_string($conn, $nome);
+                $sql = "SELECT * FROM manga WHERE nome = '$nome'";
+                $result = mysqli_query($conn, $sql);
+            }
         }
     }
 
@@ -36,12 +41,12 @@
                 <label for="nome">Nome:</label><br>
                 <input type="text" id="nome" name="nome"><br><br>
                 <input type="submit" value="Pesquisar">
-                <input type="button" value="Limpar" onclick="location.reload()">
+                <input type="button" value="todos" id="mostrar" onclick="mostrarTodos()">
+                <input type="button" value="Limpar" id="limpar" onclick="limpar()">
             </form>
         <table>
             <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Cap</th>
                 <th>Scan</th>
@@ -57,11 +62,15 @@
                 // LOOP CORRETO
                 while ($m = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
-                    echo "<td>".htmlspecialchars($m['id'])."</td>";
-                    echo "<td>".htmlspecialchars($m['nome'])."</td>";
+                    echo "<td> <a href='exibir.php?id=".$m['id']."'>".htmlspecialchars($m['nome'])."</a> </td>";
                     echo "<td>".htmlspecialchars($m['cap'])."</td>";
                     echo "<td>".htmlspecialchars($m['scan'])."</td>";
-                    echo "<td>".htmlspecialchars($m['hiato'])."</td>";
+                    if ($m['hiato'] == 0){
+                        $hiato = 'não';
+                    } else {
+                        $hiato = 'sim';
+                    }
+                    echo "<td>".htmlspecialchars($hiato)."</td>";
                     echo "<td>".htmlspecialchars($m['dataa'])."</td>";
                     echo "</tr>";
                 }
@@ -74,10 +83,15 @@
     </div>
 
     <script>
-        function limparFormulario(){
-            document.getElementById("aa").reset();
+        function mostrarTodos(){
+            document.getElementById("nome").value = "--todos--";
+            document.querySelector("form").submit();
         }
 
+        function limpar(){
+            document.getElementById("nome").value = "";
+            document.querySelector("form").submit();
+        }
     </script>
 
 </body>

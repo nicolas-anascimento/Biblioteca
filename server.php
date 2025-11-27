@@ -15,6 +15,8 @@
 
 /* 
 
+drop DATABASE if exists leitura;
+
 CREATE DATABASE IF NOT EXISTS leitura;
 
 use leitura;
