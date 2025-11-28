@@ -123,3 +123,16 @@ table tr:hover{
 #mostrar:hover{
     background: #0069d9;
 }
+
+
+td a{
+    color: black;               /* cor azul padrão */
+    text-decoration: none;        /* remove sublinhado */
+    transition: 0.2s ease;        /* animação suave */
+    text-decoration: underline;   /* sublinha no hover */
+
+}
+
+td a:hover{
+    color: grey;               /* azul mais escuro no hover */
+}
