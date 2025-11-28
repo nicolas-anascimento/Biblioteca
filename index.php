@@ -9,7 +9,7 @@
             $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
             if($nome !== ''){
                 $nome = mysqli_real_escape_string($conn, $nome);
-                $sql = "SELECT * FROM manga WHERE nome = '$nome'";
+                $sql = "SELECT * FROM manga WHERE nome LIKE '%$nome%'";
                 $result = mysqli_query($conn, $sql);
             }
         }
