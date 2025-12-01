@@ -27,6 +27,12 @@ CREATE DATABASE IF NOT EXISTS leitura;
 
 use leitura;
 
+create TABLE users(
+    id int PRIMARY KEY AUTO_INCREMENT,
+	nome varchar(200),
+    senha varchar(200)
+);
+
 create TABLE manga(
     id int PRIMARY KEY AUTO_INCREMENT,
 	nome varchar(200),
@@ -34,7 +40,8 @@ create TABLE manga(
 	scan varchar(50),
 	hiato boolean,
 	dataa date,
-	url varchar(2083)
+	idu int,
+    foreign key (idu) reference users(id)
 );
 
 insert into manga(nome, cap, scan, hiato, dataa, url) values ('a', 1, 'a', 0, curdate(), 'b');

@@ -10,7 +10,4 @@ if($id !== 0){
     $sql->execute();
     header("Location: index.php");
 }
-
-
-
 ?>
