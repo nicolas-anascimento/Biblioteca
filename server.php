@@ -1,16 +1,22 @@
 <?php
     $servidor = "localhost";
-    $usuario = "root";
-    $senha = "";
+    $user = "root";
+    $pass = "";
     $banco = "leitura";
 
-    $conn = mysqli_connect($servidor, $usuario, $senha, $banco);
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+try {
+    $pdo = new PDO("mysql:host=$servidor; dbname=$banco;charset=utf8", $user, $pass);
+    
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if(!$conn){
-        die("Falha na conexão: " . mysqli_connect_error());
-    }
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
+
+} catch (PDOException $e) {
+    die("Erro na conexão: ". $e->getMessage());
+}
+
+    
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /* 

@@ -115,24 +115,32 @@ table tr:hover{
     transition: 0.2s;
 }
 
+/* BOTÃO "Mostrar todos" */
 #mostrar{
     background: #007bff;
     color: white;
 }
-
 #mostrar:hover{
     background: #0069d9;
 }
 
-
+/* LINKS DA TABELA */
 td a{
-    color: black;               /* cor azul padrão */
-    text-decoration: none;        /* remove sublinhado */
-    transition: 0.2s ease;        /* animação suave */
-    text-decoration: underline;   /* sublinha no hover */
-
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.2s ease;
 }
 
 td a:hover{
-    color: grey;               /* azul mais escuro no hover */
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* BOTÃO CRIAR */
+#criar{
+    background: #35bb0c;
+}
+#criar:hover{
+    background: #2fa70a;
 }
