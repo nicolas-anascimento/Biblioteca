@@ -36,7 +36,7 @@ create TABLE users(
 create TABLE manga(
     id int PRIMARY KEY AUTO_INCREMENT,
 	nome varchar(200),
-	cap float,
+	cap varchar(10),
 	scan varchar(50),
 	hiato boolean,
 	dataa date,
@@ -44,8 +44,10 @@ create TABLE manga(
     foreign key (idu) reference users(id)
 );
 
-insert into manga(nome, cap, scan, hiato, dataa, url) values ('a', 1, 'a', 0, curdate(), 'b');
-insert into manga(nome, cap, scan, hiato, dataa, url) values ('b', 2, 'b', 0, curdate(), 'b')
+
+insert into users(nome, senha) values ("nicolas", "senha123");
+insert into manga(nome, cap, scan, hiato, dataa, url) values ('a', 1, 'a', 0, curdate(), '1');
+insert into manga(nome, cap, scan, hiato, dataa, url) values ('b', 2, 'b', 0, curdate(), '1')
 
 */
 
