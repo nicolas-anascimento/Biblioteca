@@ -1,19 +1,22 @@
 <?php
     require "server.php";
-    $sql = $pdo->prepare("SELECT * FROM manga");
-    $sql->execute();
-    $result = $sql->fetchAll();
-
-
     if($_SERVER['REQUEST_METHOD'] === "POST"){
-        if($_POST['nome'] !== ''){
-
-            $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
-            if($nome !== ''){
-                $sql = $pdo->prepare("SELECT * FROM manga WHERE nome LIKE ? ");
-                $sql->execute(["%$nome%"]);
-                $result = $sql->fetchAll();
-            }
+        $scan = isset($_POST['scan']) ? trim($_POST['scan']) : '';
+        $hiato = isset($_POST['hiato']) ? trim($_POST['hiato']) : '';
+        
+        if($hiato !== '' && $scan !== '') {
+            $sql = $pdo->prepare("SELECT * FROM manga WHERE scan like ? and hiato = ?");
+            $sql->execute(["%$scan%", $hiato]);
+            $result = $sql->fetchAll();
+        } elseif($scan !== ''){
+            $sql = $pdo->prepare("SELECT * FROM manga WHERE scan like ?");
+            $sql->execute(["%$scan%"]);
+            $result = $sql->fetchAll();
+        } elseif($hiato !== ''){
+            $hiato = strtolower($hiato) == 'sim' ? 1 : 0;
+            $sql = $pdo->prepare("SELECT * FROM manga WHERE hiato = ?");
+            $sql->execute([$hiato]);
+            $result = $sql->fetchAll();
         }
     }
 
@@ -32,13 +35,12 @@
         <div class="conteudo">
             <h1>Pesquisar</h1><br>
             <form method="post" id="aa" autocomplete="off">
-                <label for="nome">Nome:</label><br>
-                <input type="text" id="nome" name="nome"><br><br>
+                <label for="scan">scan:</label><br>
+                <input type="text" id="scan" name="scan"><br><br>
+                <label for="hiato">hiato:</label><br>
+                <input type="text" id="hiato" name="hiato"><br><br>
                 <input type="submit" value="Pesquisar">
-                <a href="criar.php"><input type="button" id="criar" value="Criar"></a>
-                <a href="filtrar.php"><input type="button" id="criar" value="filtrar"></a>
-            <!--   <input type="button" value="todos" id="mostrar" onclick="mostrarTodos()"> -->
-                <input type="button" value="Limpar" id="limpar_" onclick="limpar()">
+                <a href="index.php"><input type="button" value="Voltar"></a>
             </form>
         <table>
             <thead>
