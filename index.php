@@ -1,6 +1,6 @@
 <?php
     require __DIR__ . "/Config/config.php";
-    $sql = $pdo->prepare("SELECT * FROM manga");
+    $sql = $pdo->prepare("SELECT * FROM manga ORDER BY nome");
     $sql->execute();
     $result = $sql->fetchAll();
 
@@ -10,7 +10,7 @@
 
             $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
             if($nome !== ''){
-                $sql = $pdo->prepare("SELECT * FROM manga WHERE nome LIKE ? ");
+                $sql = $pdo->prepare("SELECT * FROM manga WHERE nome LIKE ? ORDER BY nome");
                 $sql->execute(["%$nome%"]);
                 $result = $sql->fetchAll();
             }
@@ -73,11 +73,6 @@
     </div>
 
     <script>
-        function mostrarTodos(){
-            document.getElementById("nome").value = "--todos--";
-            document.querySelector("form").submit();
-        }
-
         function limpar(){
             document.getElementById("nome").value = "";
             document.querySelector("form").submit();

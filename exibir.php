@@ -54,7 +54,7 @@
                 <input type="text" id="scan" name="scan" value="<?= htmlspecialchars($manga['scan']) ?>"><br><br>
                 <label for="hiato">Hiato:</label><br>
                 <input type="text" id="hiato" name="hiato" value="<?= htmlspecialchars($manga['hiato']) ?>"><br><br>
-                <label for="nome">Data:</label><br>
+                <label for="data">Data:</label><br>
                 <input type="text" id="data" name="data" value="<?= htmlspecialchars($manga['dataa']) ?>" readonly><br><br>
                 <input type="button" value="Editar" id="atualizar">
                 <a href="index.php"><input type="button" value="Voltar"></a>
@@ -85,6 +85,7 @@
 
             console.log(dados);
 
+            document.getElementById('data').value = dados.dataa
         })    
     </script>
 </body>
