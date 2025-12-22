@@ -11,25 +11,11 @@
         }
     };
 
-    $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
     if ($id !== 0){
         pesquisar();
     }
-
-/*
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
-        $cap = isset($_POST['cap']) ? (int) $_POST['cap'] : 0;
-        $hiato = isset($_POST['hiato']) ? trim($_POST['hiato']) : '';
-        $hiato = strtolower($hiato) == 'sim' ? 1 : 0;
-        $scan = isset($_POST['scan']) ? trim($_POST['scan']) : '';
-        $sql = $pdo->prepare("UPDATE manga SET nome = ?, cap = ?, scan = ?, hiato = ?, dataa = curdate() WHERE id = ? ");
-        $sql->execute([$nome, $cap, $scan, $hiato, $id]);
-        pesquisar();
-    }
-*/
 
 ?>
 
@@ -46,17 +32,22 @@
         <div class="conteudo">
             <h1>Pesquisar</h1><br>
             <form method="post" id="aa" autocomplete="off">
+
                 <label for="nome">Nome:</label><br>
-                <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($manga['nome']) ?>"><br><br>
+                <input type="text" id="nome" name="nome" onchange="Atualizar()" value="<?= htmlspecialchars($manga['nome']) ?>"><br><br>
+
                 <label for="cap">Capítulo:</label><br>
-                <input type="text" id="cap" name="cap" value="<?= htmlspecialchars($manga['cap']) ?>"><br><br>
+                <input type="text" id="cap" name="cap" onchange="Atualizar()" value="<?= htmlspecialchars($manga['cap']) ?>"><br><br>
+
                 <label for="scan">Scan:</label><br>
-                <input type="text" id="scan" name="scan" value="<?= htmlspecialchars($manga['scan']) ?>"><br><br>
+                <input type="text" id="scan" name="scan" onchange="Atualizar()" value="<?= htmlspecialchars($manga['scan']) ?>"><br><br>
+
                 <label for="hiato">Hiato:</label><br>
-                <input type="text" id="hiato" name="hiato" value="<?= htmlspecialchars($manga['hiato']) ?>"><br><br>
+                <input type="text" id="hiato" name="hiato" onchange="Atualizar()" value="<?= htmlspecialchars($manga['hiato']) ?>"><br><br>
+
                 <label for="data">Data:</label><br>
-                <input type="text" id="data" name="data" value="<?= htmlspecialchars($manga['dataa']) ?>" readonly><br><br>
-                <input type="button" value="Editar" id="atualizar">
+                <input type="text" id="data" name="data" onchange="Atualizar()" value="<?= htmlspecialchars($manga['dataa']) ?>" readonly><br><br>
+
                 <a href="index.php"><input type="button" value="Voltar"></a>
                 <a href="excluir.php?id=<?=htmlspecialchars($id)?>"><input type="Button" value="Excluir" onclick="return confirm('Tem Certeza que deseja excluir este manga?')"></a>
 
@@ -65,7 +56,8 @@
     </div>    
     <script>
         console.log(<?= htmlspecialchars($id) ?>)
-        document.querySelector("#atualizar").addEventListener("click", async () => {
+        
+        async function Atualizar() {
             const id = <?=htmlspecialchars($id);?>;
             const nome = document.getElementById("nome").value;
             const cap = document.getElementById("cap").value;
@@ -86,7 +78,7 @@
             console.log(dados);
 
             document.getElementById('data').value = dados.dataa
-        })    
+        }    
     </script>
 </body>
 </html>

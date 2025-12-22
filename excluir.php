@@ -2,7 +2,7 @@
 require "server.php";
 
 if(isset($_GET['id'])){
-    $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+    $id = (int)$_GET['id'] ?? 0;
 }
 
 if($id !== 0){
