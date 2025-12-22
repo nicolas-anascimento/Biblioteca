@@ -1,5 +1,5 @@
 <?php
-    require "server.php";
+    require __DIR__ . "/Config/config.php";
     $sql = $pdo->prepare("SELECT * FROM manga");
     $sql->execute();
     $result = $sql->fetchAll();

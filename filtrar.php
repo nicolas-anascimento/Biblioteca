@@ -1,5 +1,5 @@
 <?php
-    require "server.php";
+    require __DIR__ . "/Config/config.php";
     if($_SERVER['REQUEST_METHOD'] === "POST"){
         $scan = isset($_POST['scan']) ? trim($_POST['scan']) : '';
         $hiato = isset($_POST['hiato']) ? trim($_POST['hiato']) : '';

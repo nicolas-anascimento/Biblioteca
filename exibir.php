@@ -1,5 +1,5 @@
 <?php
-    require "server.php";
+    require __DIR__ . "/Config/config.php";
     $manga = [];
     function pesquisar(){
         global $id, $pdo, $manga;
@@ -10,11 +10,15 @@
             $manga['hiato'] = $manga['hiato'] == 0 ? 'Não' : 'Sim';
         }
     };
+
     $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+
     if ($id !== 0){
         pesquisar();
     }
 
+/*
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
         $cap = isset($_POST['cap']) ? (int) $_POST['cap'] : 0;
@@ -25,6 +29,8 @@
         $sql->execute([$nome, $cap, $scan, $hiato, $id]);
         pesquisar();
     }
+*/
+
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +56,7 @@
                 <input type="text" id="hiato" name="hiato" value="<?= htmlspecialchars($manga['hiato']) ?>"><br><br>
                 <label for="nome">Data:</label><br>
                 <input type="text" id="data" name="data" value="<?= htmlspecialchars($manga['dataa']) ?>" readonly><br><br>
-                <input type="submit" value="Editar">
+                <input type="button" value="Editar" id="atualizar">
                 <a href="index.php"><input type="button" value="Voltar"></a>
                 <a href="excluir.php?id=<?=htmlspecialchars($id)?>"><input type="Button" value="Excluir" onclick="return confirm('Tem Certeza que deseja excluir este manga?')"></a>
 
@@ -58,7 +64,28 @@
         </div>
     </div>    
     <script>
-        console.log("<?php echo "$nome, $cap, $hiato, $scan"; ?>")
+        console.log(<?= htmlspecialchars($id) ?>)
+        document.querySelector("#atualizar").addEventListener("click", async () => {
+            const id = <?=htmlspecialchars($id);?>;
+            const nome = document.getElementById("nome").value;
+            const cap = document.getElementById("cap").value;
+            const scan = document.getElementById("scan").value;
+            const hiato = document.getElementById("hiato").value;
+            
+            const Form = new FormData();
+            Form.append('id', id);
+            Form.append('nome', nome);
+            Form.append('cap', cap);
+            Form.append('scan', scan);
+            Form.append('hiato', hiato);
+
+            let response = await fetch("API/Atualizar.php", {method:"POST", body: Form});    
+
+            let dados = await response.json();
+
+            console.log(dados);
+
+        })    
     </script>
 </body>
 </html>
