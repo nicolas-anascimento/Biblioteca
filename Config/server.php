@@ -1,8 +1,9 @@
 <?php
-    $servidor = "localhost";
-    $user = "root";
-    $pass = "";
-    $banco = "leitura";
+    require "env_config.php";
+    $servidor = $_ENV['SERVER'];
+    $user = $_ENV['USER'];
+    $pass = $_ENV['PASS'];
+    $banco = $_ENV["BANCO"];
 
 try {
     $pdo = new PDO("mysql:host=$servidor; dbname=$banco;charset=utf8", $user, $pass);

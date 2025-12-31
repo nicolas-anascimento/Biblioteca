@@ -66,6 +66,13 @@
         };
 
 
+        document.getElementById("nome").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                pesquisar();        // chama a busca
+            }
+        });        
+
         async function pesquisar(){
             const tbody = document.getElementById("Lista");
             tbody.innerHTML = "";
