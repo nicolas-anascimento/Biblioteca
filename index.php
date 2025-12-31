@@ -1,5 +1,6 @@
 <?php
     require __DIR__ . "/Config/config.php";
+    /*
     $sql = $pdo->prepare("SELECT * FROM manga ORDER BY nome");
     $sql->execute();
     $result = $sql->fetchAll();
@@ -16,6 +17,7 @@
             }
         }
     }
+    */
 
 ?>
 
@@ -34,7 +36,7 @@
             <form method="post" id="aa" autocomplete="off">
                 <label for="nome">Nome:</label><br>
                 <input type="text" id="nome" name="nome"><br><br>
-                <input type="submit" value="Pesquisar">
+                <input type="button" value="Pesquisar" id="pesquisa" onclick="pesquisar()">
                 <a href="criar.php"><input type="button" id="criar" value="Criar"></a>
                 <a href="filtrar.php"><input type="button" id="criar" value="filtrar"></a>
             <!--   <input type="button" value="todos" id="mostrar" onclick="mostrarTodos()"> -->
@@ -51,22 +53,7 @@
             </tr>
             </thead>
 
-            <tbody>
-            <?php
-            if (!empty($result)) {
-                foreach ($result as $m)  {
-                    echo "<tr>";
-                    echo "<td> <a href='exibir.php?id=".$m['id']."'>".htmlspecialchars($m['nome'])."</a> </td>";
-                    echo "<td>".htmlspecialchars($m['cap'])."</td>";
-                    echo "<td>".htmlspecialchars($m['scan'])."</td>";
-                    $hiato = $m['hiato'] == 0 ? "Não" : "Sim";
-                    echo "<td>".htmlspecialchars($hiato)."</td>";
-                    echo "<td>".htmlspecialchars($m['dataa'])."</td>";
-                    echo "</tr>";
-                }
-            }
-            ?>
-            </tbody>
+            <tbody id="Lista"> </tbody>
         </table>
 
         </div>
@@ -75,8 +62,48 @@
     <script>
         function limpar(){
             document.getElementById("nome").value = "";
-            document.querySelector("form").submit();
+            pesquisar();
         };
+
+
+        async function pesquisar(){
+            const tbody = document.getElementById("Lista");
+            tbody.innerHTML = "";
+
+
+            const nome = document.getElementById("nome").value
+
+            const Form = new FormData();
+            Form.append('nome', nome );
+
+            let result = await fetch("API/Pesquisar.php", {method:"POST", body: Form});
+
+            result = await result.json();
+            
+            if (result.length > 0) {
+                result.forEach(m => {
+                    const tr = document.createElement("tr");
+
+                    const hiato = m.hiato == 0 ? "Não" : "Sim";
+
+                    tr.innerHTML = `
+                        <td>
+                            <a href="exibir.php?id=${m.id}">
+                                ${m.nome}
+                            </a>
+                        </td>
+                        <td>${m.cap}</td>
+                        <td>${m.scan}</td>
+                        <td>${hiato}</td>
+                        <td>${m.dataa}</td>
+                    `;
+
+                    tbody.appendChild(tr);
+                });
+            }
+        }  
+        
+        pesquisar();
     </script>
 
 </body>
