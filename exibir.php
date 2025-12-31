@@ -57,33 +57,16 @@
     <script>
         console.log(<?= htmlspecialchars($id) ?>)
         
-        document.getElementById("nome").addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // impede submit
-                Atualizar();        // chama a busca
-            }
-        });
-        
-        document.getElementById("cap").addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // impede submit
-                Atualizar();        // chama a busca
-            }
-        });  
-        
-        document.getElementById("scan").addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // impede submit
-                Atualizar();        // chama a busca
-            }
-        });
-        
-        document.getElementById("hiato").addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // impede submit
-                Atualizar();        // chama a busca
-            }
-        });        
+        const ids = ['nome', 'cap', 'scan', 'hiato'];
+
+        ids.forEach(id =>{
+            document.getElementById(id).addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault(); 
+                    Atualizar();        
+                }
+            });             
+        })        
         
 
         async function Atualizar() {

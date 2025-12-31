@@ -41,36 +41,18 @@
             </form>
         </div>
     </div>    
-    <script>
+    <script>   
 
+        const ids = ['nome', 'cap', 'scan', 'hiato'];
 
-        document.getElementById("nome").addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // impede submit
-                criar();        // chama a busca
-            }
-        });
-        
-        document.getElementById("cap").addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // impede submit
-                criar();        // chama a busca
-            }
-        });  
-        
-        document.getElementById("scan").addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // impede submit
-                criar();        // chama a busca
-            }
-        });
-        
-        document.getElementById("hiato").addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // impede submit
-                criar();        // chama a busca
-            }
-        });     
+        ids.forEach(id =>{
+            document.getElementById(id).addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault(); // impede submit
+                    criar();        // chama a busca
+                }
+            });             
+        })
 
 
         async function criar() {
