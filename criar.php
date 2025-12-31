@@ -36,13 +36,44 @@
                 <input type="text" id="scan" name="scan"><br><br>
                 <label for="hiato">Hiato:</label><br>
                 <input type="text" id="hiato" name="hiato"><br><br>
-                <input type="button" value="Criar" id="criar">
-                <a href="index.php"> <input type="button" value="Voltar"> </a>
+                <input type="button" value="Criar" onclick="criar()" id="criar">
+                <input type="button" value="Voltar" onclick="window.location.href='index.php'">
             </form>
         </div>
     </div>    
     <script>
-        document.querySelector("#criar").addEventListener("click", async () => {
+
+
+        document.getElementById("nome").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                criar();        // chama a busca
+            }
+        });
+        
+        document.getElementById("cap").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                criar();        // chama a busca
+            }
+        });  
+        
+        document.getElementById("scan").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                criar();        // chama a busca
+            }
+        });
+        
+        document.getElementById("hiato").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                criar();        // chama a busca
+            }
+        });     
+
+
+        async function criar() {
             const nome = document.getElementById("nome").value;
             const cap = document.getElementById("cap").value;
             const scan = document.getElementById("scan").value;
@@ -57,7 +88,7 @@
             let dados = await response.json();
             console.log(dados)
             window.location.href="exibir.php?id="+dados.id;
-        })        
+        }
     </script>
 </body>
 </html>

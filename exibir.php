@@ -57,6 +57,35 @@
     <script>
         console.log(<?= htmlspecialchars($id) ?>)
         
+        document.getElementById("nome").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                Atualizar();        // chama a busca
+            }
+        });
+        
+        document.getElementById("cap").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                Atualizar();        // chama a busca
+            }
+        });  
+        
+        document.getElementById("scan").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                Atualizar();        // chama a busca
+            }
+        });
+        
+        document.getElementById("hiato").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // impede submit
+                Atualizar();        // chama a busca
+            }
+        });        
+        
+
         async function Atualizar() {
             const id = <?=htmlspecialchars($id);?>;
             const nome = document.getElementById("nome").value;
