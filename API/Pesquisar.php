@@ -7,8 +7,6 @@
         $nome = $_GET['nome'];
     }
 
-    echo json_encode(['nome' => $nome]);
-    
     if($nome === ''){
         $sql = $pdo->prepare("SELECT m.id id, m.nome nome, m.cap cap, m.scan scan, s.nome status, m.dataa data FROM manga m INNER JOIN status s ON s.id = m.status_id ORDER BY nome");
         $sql->execute();
