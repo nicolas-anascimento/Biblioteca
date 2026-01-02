@@ -15,12 +15,10 @@
             $id = (int)$_POST['id'];
         
         }
-
         $nome = $_POST['nome'];
         $cap = $_POST['cap'];
         $scan = $_POST['scan'];
-        $hiato = strtolower($_POST['hiato'] ?? '') === 'sim' ? 1 : 0;
-
+        $status = $_POST['status'];
         if($id <= 0){
             http_response_code(400);
             echo json_encode([
@@ -40,8 +38,23 @@
         }
 
         if($id !== 0){
-            $sql = $pdo->prepare("UPDATE manga SET nome = ?, cap = ?, scan = ?, hiato = ?, dataa = curdate() WHERE id = ? ");
-            $sql->execute([$nome, $cap, $scan, $hiato, $id]);
+            $sql = $pdo->prepare("SELECT id FROM status WHERE LOWER(nome) = LOWER(?)");
+            $sql->execute([$status]);
+            $status_query = $sql->fetch(PDO::FETCH_ASSOC);
+
+            if(!$status_query){
+                http_response_code(400);
+                echo json_encode([
+                    'sucess' => false,
+                    'error' => 'Status Inválido'
+                ]);
+                exit;
+            }
+            
+            $status_id = (int)$status_query['id'];
+
+            $sql = $pdo->prepare("UPDATE manga SET nome = ?, cap = ?, scan = ?, status_id = ?, dataa = curdate() WHERE id = ? ");
+            $sql->execute([$nome, $cap, $scan, $status_id, $id]);
             
             $sqll = $pdo->prepare("SELECT * FROM manga WHERE id = ?");
             $sqll->execute([$id]);
@@ -58,6 +71,6 @@
         echo json_encode([
             'sucesso' => false,
             'mensagem' => 'Erro interno do servidor',
-            'details' => e->getMessage()
+            'details' => $e->getMessage()
         ]);
     }

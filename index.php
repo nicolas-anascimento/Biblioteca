@@ -38,8 +38,8 @@
                 <input type="text" id="nome" name="nome"><br><br>
                 <input type="button" value="Pesquisar" id="pesquisa" onclick="pesquisar()">
                 <a href="criar.php"><input type="button" id="criar" value="Criar"></a>
-                <a href="filtrar.php"><input type="button" id="criar" value="filtrar"></a>
-            <!--   <input type="button" value="todos" id="mostrar" onclick="mostrarTodos()"> -->
+            <!--<a href="filtrar.php"><input type="button" id="filtrar" value="filtrar"></a> -->
+            <!--<input type="button" value="todos" id="mostrar" onclick="mostrarTodos()"> -->
                 <input type="button" value="Limpar" id="limpar_" onclick="limpar()">
             </form>
         <table>
@@ -48,7 +48,7 @@
                 <th>Nome</th>
                 <th>Cap</th>
                 <th>Scan</th>
-                <th>Hiato</th>
+                <th>Status</th>
                 <th>Data</th>
             </tr>
             </thead>
@@ -91,8 +91,6 @@
                 result.forEach(m => {
                     const tr = document.createElement("tr");
 
-                    const hiato = m.hiato == 0 ? "Não" : "Sim";
-
                     tr.innerHTML = `
                         <td>
                             <a href="exibir.php?id=${m.id}">
@@ -101,8 +99,8 @@
                         </td>
                         <td>${m.cap}</td>
                         <td>${m.scan}</td>
-                        <td>${hiato}</td>
-                        <td>${m.dataa}</td>
+                        <td>${m.status}</td>
+                        <td>${m.data}</td>
                     `;
 
                     tbody.appendChild(tr);

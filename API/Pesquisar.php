@@ -5,10 +5,10 @@
     $nome = isset($_POST['nome']) ? $_POST['nome'] : '';
 
     if($nome === ''){
-        $sql = $pdo->prepare('SELECT * FROM manga ORDER BY nome');
+        $sql = $pdo->prepare("SELECT m.id id, m.nome nome, m.cap cap, m.scan scan, s.nome status, m.dataa data FROM manga m INNER JOIN status s ON s.id = m.status_id ORDER BY nome");
         $sql->execute();
     } else {
-        $sql = $pdo->prepare("SELECT * FROM manga WHERE nome like ?");
+        $sql = $pdo->prepare("SELECT m.id id, m.nome nome, m.cap cap, m.scan scan, s.nome status, m.dataa data FROM manga m INNER JOIN status s ON s.id = m.status_id WHERE nome LIKE ? ORDER BY nome");
         $sql->execute(["%$nome%"]);
     }
 

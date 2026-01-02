@@ -1,18 +1,8 @@
 <?php
     require __DIR__ . "/Config/config.php";
-/*
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
-        $cap = isset($_POST['cap']) ? (int) $_POST['cap'] : 0;
-        $hiato = isset($_POST['hiato']) ? trim($_POST['hiato']) : '';
-        $hiato = strtolower($hiato) == 'sim' ? 1 : 0;
-        $scan = isset($_POST['scan']) ? trim($_POST['scan']) : '';
-        $sql = $pdo->prepare("INSERT INTO manga(nome, cap, scan, hiato, dataa, url) values (?, ?, ?, ?, curdate(), 'a')");
-        $sql->execute([$nome, $cap, $scan, $hiato]);
-        $id = $pdo->lastInsertId();
-        header("Location: exibir.php?id=$id");
-    } 
-*/
+    $sql = $pdo->prepare("SELECT nome FROM status");
+    $sql->execute();
+    $lista = $sql->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +24,8 @@
                 <input type="text" id="cap" name="cap"><br><br>
                 <label for="scan">Scan:</label><br>
                 <input type="text" id="scan" name="scan"><br><br>
-                <label for="hiato">Hiato:</label><br>
-                <input type="text" id="hiato" name="hiato"><br><br>
+                <label for="status">Status:</label><br>
+                <input type="text" list="lista_status" id="status" name="status"><br><br>
                 <input type="button" value="Criar" onclick="criar()" id="criar">
                 <input type="button" value="Voltar" onclick="window.location.href='index.php'">
             </form>
@@ -43,7 +33,7 @@
     </div>    
     <script>   
 
-        const ids = ['nome', 'cap', 'scan', 'hiato'];
+        const ids = ['nome', 'cap', 'scan', 'status'];
 
         ids.forEach(id =>{
             document.getElementById(id).addEventListener("keydown", function (e) {
@@ -59,12 +49,12 @@
             const nome = document.getElementById("nome").value;
             const cap = document.getElementById("cap").value;
             const scan = document.getElementById("scan").value;
-            const hiato = document.getElementById("hiato").value;
+            const status = document.getElementById("status").value;
             const Form = new FormData();
             Form.append('nome', nome);
             Form.append('cap', cap);
             Form.append('scan', scan);
-            Form.append('hiato', hiato);
+            Form.append('status', status);
             const response = await fetch("API/Criar.php", {method:"POST", body: Form});    
 
             let dados = await response.json();
@@ -72,5 +62,12 @@
             window.location.href="exibir.php?id="+dados.id;
         }
     </script>
+
+    <datalist id="lista_status">
+        <?php if(!empty($lista)): foreach($lista as $l): ?>
+            <option value="<?=$l['nome']?>">
+        <?php endforeach; endif; ?>
+    </datalist>
+
 </body>
 </html>

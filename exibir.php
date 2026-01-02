@@ -1,22 +1,18 @@
 <?php
     require __DIR__ . "/Config/config.php";
     $manga = [];
-    function pesquisar(){
-        global $id, $pdo, $manga;
-        $sql = $pdo->prepare("SELECT * FROM manga WHERE id = ?");
-        $sql->execute([$id]);
-        $manga = $sql->fetch();
-        if(!empty($manga)){
-            $manga['hiato'] = $manga['hiato'] == 0 ? 'Não' : 'Sim';
-        }
-    };
-
     $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
     if ($id !== 0){
-        pesquisar();
+        global $id, $pdo, $manga;
+        $sql = $pdo->prepare("SELECT m.nome nome, m.cap cap, m.scan scan, s.nome status, m.dataa data FROM manga m INNER JOIN status s ON s.id = m.status_id WHERE m.id = ?");
+        $sql->execute([$id]);
+        $manga = $sql->fetch(PDO::FETCH_ASSOC);
     }
 
+    $sql = $pdo->prepare("SELECT nome FROM status");
+    $sql->execute();
+    $lista = $sql->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +26,7 @@
 <body>
     <div class="container">
         <div class="conteudo">
-            <h1>Pesquisar</h1><br>
+            <h1><?= htmlspecialchars($manga['nome']) ?></h1><br>
             <form method="post" id="aa" autocomplete="off">
 
                 <label for="nome">Nome:</label><br>
@@ -42,11 +38,11 @@
                 <label for="scan">Scan:</label><br>
                 <input type="text" id="scan" name="scan" onchange="Atualizar()" value="<?= htmlspecialchars($manga['scan']) ?>"><br><br>
 
-                <label for="hiato">Hiato:</label><br>
-                <input type="text" id="hiato" name="hiato" onchange="Atualizar()" value="<?= htmlspecialchars($manga['hiato']) ?>"><br><br>
+                <label for="status">Status:</label><br>
+                <input type="text" id="status" list="status_lista" name="status" onchange="Atualizar()" value="<?= htmlspecialchars($manga['status']) ?>"><br><br>
 
                 <label for="data">Data:</label><br>
-                <input type="text" id="data" name="data" onchange="Atualizar()" value="<?= htmlspecialchars($manga['dataa']) ?>" readonly><br><br>
+                <input type="text" id="data" name="data" onchange="Atualizar()" value="<?= htmlspecialchars($manga['data']) ?>" readonly><br><br>
 
                 <a href="index.php"><input type="button" value="Voltar"></a>
                 <a href="excluir.php?id=<?=htmlspecialchars($id)?>"><input type="Button" value="Excluir" onclick="return confirm('Tem Certeza que deseja excluir este manga?')"></a>
@@ -57,7 +53,7 @@
     <script>
         console.log(<?= htmlspecialchars($id) ?>)
         
-        const ids = ['nome', 'cap', 'scan', 'hiato'];
+        const ids = ['nome', 'cap', 'scan', 'status'];
 
         ids.forEach(id =>{
             document.getElementById(id).addEventListener("keydown", function (e) {
@@ -74,14 +70,14 @@
             const nome = document.getElementById("nome").value;
             const cap = document.getElementById("cap").value;
             const scan = document.getElementById("scan").value;
-            const hiato = document.getElementById("hiato").value;
+            const status = document.getElementById("status").value;
             
             const Form = new FormData();
             Form.append('id', id);
             Form.append('nome', nome);
             Form.append('cap', cap);
             Form.append('scan', scan);
-            Form.append('hiato', hiato);
+            Form.append('status', status);
 
             let response = await fetch("API/Atualizar.php", {method:"POST", body: Form});    
 
@@ -92,5 +88,11 @@
             document.getElementById('data').value = dados.dataa
         }    
     </script>
+
+    <datalist id="status_lista">
+        <?php if(!empty($lista)): foreach($lista as $l): ?>
+            <option value="<?=$l['nome']?>">
+        <?php endforeach; endif; ?>
+    </datalist>
 </body>
 </html>
