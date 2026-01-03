@@ -75,8 +75,7 @@
 
         async function pesquisar(){
             const tbody = document.getElementById("Lista");
-            tbody.innerHTML = "";
-
+            let cont = 1;
 
             const nome = document.getElementById("nome").value
 
@@ -86,8 +85,9 @@
             let result = await fetch("API/Pesquisar.php", {method:"POST", body: Form});
 
             result = await result.json();
-            
+
             if (result.length > 0) {
+                tbody.innerHTML = '';
                 result.forEach(m => {
                     const tr = document.createElement("tr");
 
@@ -106,6 +106,8 @@
                     tbody.appendChild(tr);
                 });
             }
+
+            cont++
         }  
         
         pesquisar();
