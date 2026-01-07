@@ -75,8 +75,6 @@
 
         async function pesquisar(){
             const tbody = document.getElementById("Lista");
-            let cont = 1;
-
             const nome = document.getElementById("nome").value
 
             const Form = new FormData();
@@ -106,8 +104,6 @@
                     tbody.appendChild(tr);
                 });
             }
-
-            cont++
         }  
         
         pesquisar();

@@ -26,7 +26,7 @@
                 <input type="text" id="scan" name="scan"><br><br>
                 <label for="status">Status:</label><br>
                 <input type="text" list="lista_status" id="status" name="status"><br><br>
-                <input type="button" value="Criar" onclick="criar()" id="criar">
+                <input type="button" value="Criar" id="criar">
                 <input type="button" value="Voltar" onclick="window.location.href='index.php'">
             </form>
         </div>
@@ -45,22 +45,28 @@
         })
 
 
-        async function criar() {
+        document.getElementById("criar").addEventListener("click", async function (e) {
             const nome = document.getElementById("nome").value;
             const cap = document.getElementById("cap").value;
             const scan = document.getElementById("scan").value;
             const status = document.getElementById("status").value;
+            
             const Form = new FormData();
             Form.append('nome', nome);
             Form.append('cap', cap);
             Form.append('scan', scan);
             Form.append('status', status);
-            const response = await fetch("API/Criar.php", {method:"POST", body: Form});    
-
+            
+            const response = await fetch("API/Criar.php", {method:"POST", body: Form});
+            
             let dados = await response.json();
+            
             console.log(dados)
-            window.location.href="exibir.php?id="+dados.id;
-        }
+            
+            window.location.href="exibir.php?id="+dados.id;   
+        })
+       
+
     </script>
 
     <datalist id="lista_status">

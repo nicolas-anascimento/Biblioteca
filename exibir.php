@@ -4,7 +4,6 @@
     $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
     if ($id !== 0){
-        global $id, $pdo, $manga;
         $sql = $pdo->prepare("SELECT m.nome nome, m.cap cap, m.scan scan, s.nome status, m.dataa data FROM manga m INNER JOIN status s ON s.id = m.status_id WHERE m.id = ?");
         $sql->execute([$id]);
         $manga = $sql->fetch(PDO::FETCH_ASSOC);
@@ -45,7 +44,7 @@
                 <input type="text" id="data" name="data" onchange="Atualizar()" value="<?= htmlspecialchars($manga['data']) ?>" readonly><br><br>
 
                 <a href="index.php"><input type="button" value="Voltar"></a>
-                <a href="excluir.php?id=<?=htmlspecialchars($id)?>"><input type="Button" value="Excluir" onclick="return confirm('Tem Certeza que deseja excluir este manga?')"></a>
+                <input type="Button" value="Excluir" id="excluir">
 
             </form>
         </div>
@@ -66,7 +65,7 @@
         
 
         async function Atualizar() {
-            const id = <?=htmlspecialchars($id);?>;
+            const id = <?php echo($id); ?>;
             const nome = document.getElementById("nome").value;
             const cap = document.getElementById("cap").value;
             const scan = document.getElementById("scan").value;
@@ -86,7 +85,25 @@
             console.log(dados);
 
             document.getElementById('data').value = dados.dataa
-        }    
+        }
+        
+        document.getElementById("excluir").addEventListener("click", async function (e) {
+            const confirmado = confirm('Tem Certeza que deseja excluir este manga?');
+            if(confirmado){
+                id = <?php echo($id) ?>;
+                let Form = new FormData;
+                Form.append("id", id)
+
+                const response = await fetch("/API/excluir.php", {method: "POST", body: Form})
+                const dados = await response.json();
+
+                console.log(dados)
+
+                if(dados.sucess == true){
+                    window.location.href="index.php"
+                }
+            }
+        })        
     </script>
 
     <datalist id="status_lista">
