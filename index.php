@@ -1,23 +1,6 @@
 <?php
     require __DIR__ . "/Config/config.php";
-    /*
-    $sql = $pdo->prepare("SELECT * FROM manga ORDER BY nome");
-    $sql->execute();
-    $result = $sql->fetchAll();
-
-
-    if($_SERVER['REQUEST_METHOD'] === "POST"){
-        if($_POST['nome'] !== ''){
-
-            $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
-            if($nome !== ''){
-                $sql = $pdo->prepare("SELECT * FROM manga WHERE nome LIKE ? ORDER BY nome");
-                $sql->execute(["%$nome%"]);
-                $result = $sql->fetchAll();
-            }
-        }
-    }
-    */
+    
 
 ?>
 
@@ -54,7 +37,11 @@
             </thead>
 
             <tbody id="Lista"> </tbody>
+
         </table>
+
+        <div id="resultado"> </div>
+        
 
         </div>
     </div>
@@ -76,6 +63,7 @@
         async function pesquisar(){
             const tbody = document.getElementById("Lista");
             const nome = document.getElementById("nome").value
+            const div = document.getElementById("resultado")
 
             const Form = new FormData();
             Form.append('nome', nome );
@@ -83,9 +71,10 @@
             let result = await fetch("API/Pesquisar.php", {method:"POST", body: Form});
 
             result = await result.json();
-
+            console.log(result)
             if (result.length > 0) {
                 tbody.innerHTML = '';
+                div.innerHTML = '';
                 result.forEach(m => {
                     const tr = document.createElement("tr");
 
@@ -102,7 +91,16 @@
                     `;
 
                     tbody.appendChild(tr);
+                    div.style.margin = "";
+                    div.style.minHeight = "";
                 });
+            } else {
+                tbody.innerHTML = ''
+                const p = document.createElement("p")
+                p.innerHTML = "Nenhum Resultado"
+                div.style.margin =  "20px auto";
+                div.style.minHeight = "50px";
+                div.appendChild(p)
             }
         }  
         

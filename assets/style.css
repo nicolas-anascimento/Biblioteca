@@ -157,3 +157,11 @@ td a:hover{
 #pesquisa{
     background: #2fa70a;
 }
+
+#resultado {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

@@ -25,7 +25,7 @@
         http_response_code(500);
         echo json_encode([
             'sucess' => false,
-            'mensagem' => 'Erro interno do servidor',
+            'message' => 'Erro interno do servidor',
             'details' => $e->getMessage()
         ]);        
     }

@@ -12,7 +12,7 @@ try{
         http_response_code(400);
         echo json_decode([
             'sucesso' => false,
-            'mensagem' => "Campos obrigatórios vazios",
+            'message' => "Campos obrigatórios vazios",
         ]);
         exit;
     }
@@ -26,23 +26,24 @@ try{
         http_response_code(500);
         echo json_decode([
             'sucesso' => false,
-            'mensagem' => "O status é inválido"
+            'message' => "O status é inválido"
         ]);
         exit;
     }
     
 
-    $sql = $pdo->prepare("INSERT INTO manga(nome, cap, scan, status_id, dataa) VALUES (?, ?, ?, ?, curdate())");
-    $sql->execute([$nome, $cap, $scan, $status_id]);
+    $sql = $pdo->prepare("INSERT INTO manga(nome, cap, scan, status_id, dataa, id_user) VALUES (?, ?, ?, ?, curdate(), ?)");
+    $sql->execute([$nome, $cap, $scan, $status_id, $_SESSION["id"]]);
     $id = $pdo->lastInsertId();
     
     echo json_encode(['sucess' => true, 'id' => $id]);
+
 } catch (Throwable $e) {
     http_response_code(500);
 
     echo json_encode([
         'sucesso' => false,
-        'mensagem' => 'Erro interno do servidor',
+        'message' => 'Erro interno do servidor',
         'details' => $e->getMessage()
     ]);
 }

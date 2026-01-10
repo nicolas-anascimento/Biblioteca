@@ -63,14 +63,14 @@
 
         $data = $dados['dataa'];
 
-        echo json_encode(['resposta' => 'funcionou', 'dataa' => $data]);
+        echo json_encode(['message' => 'funcionou', 'dataa' => $data]);
 
     } catch (Throwable $e) {
         http_response_code(500);
 
         echo json_encode([
             'sucesso' => false,
-            'mensagem' => 'Erro interno do servidor',
+            'message' => 'Erro interno do servidor',
             'details' => $e->getMessage()
         ]);
     }
