@@ -85,7 +85,14 @@
             console.log(dados);
 
             document.getElementById('data').value = dados.dataa
+            return dados
         }
+
+        document.addEventListener("keydown", async (e) => {
+            if(e.key === "Escape"){ 
+                window.location.href = "index.php";
+            }
+        })        
         
         document.getElementById("excluir").addEventListener("click", async function (e) {
             const confirmado = confirm('Tem Certeza que deseja excluir este manga?');
@@ -103,7 +110,9 @@
                     window.location.href="index.php"
                 }
             }
-        })        
+        })
+
+        
     </script>
 
     <datalist id="status_lista">

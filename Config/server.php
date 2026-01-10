@@ -12,7 +12,7 @@ $port = ($port !== null && $port !== '') ? (int)$port : null;
 $dsn = "mysql:host={$servidor};" . ($port ? "port={$port};" : "") . "dbname={$banco};charset=utf8mb4";
 
 try {
-    if($servidor == '' || $user == '' || $pass == '' || $banco == ''){
+    if($servidor == '' || $user == '' || $banco == ''){
       die("Error, configuração do ENV erradas ou inexistentes");
     }
     $options = [
