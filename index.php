@@ -95,6 +95,7 @@
                     div.style.minHeight = "";
                 });
             } else {
+                div.innerHTML = ''
                 tbody.innerHTML = ''
                 const p = document.createElement("p")
                 p.innerHTML = "Nenhum Resultado"
