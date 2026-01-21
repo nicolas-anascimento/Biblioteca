@@ -1,18 +1,20 @@
 <?php
-    require __DIR__ . "/Config/config.php";
-    $sql = $pdo->prepare("SELECT nome FROM status");
-    $sql->execute();
-    $lista = $sql->fetchAll(PDO::FETCH_ASSOC);
+require __DIR__ . "/Config/config.php";
+$sql = $pdo->prepare("SELECT nome FROM status");
+$sql->execute();
+$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="/Biblioteca/assets/CSS/style.css">
 </head>
+
 <body>
     <div class="container">
         <div class="conteudo">
@@ -25,55 +27,19 @@
                 <label for="scan">Scan:</label><br>
                 <input type="text" id="scan" name="scan"><br><br>
                 <label for="status">Status:</label><br>
-                <input type="text" list="lista_status" id="status" name="status"><br><br>
+                <input type="text" list="status_lista" id="status" name="status"><br><br>
                 <input type="button" value="Criar" id="criar">
-                <input type="button" value="Voltar" onclick="window.location.href='index.php'">
+                <input type="button" value="Voltar" id="voltar">
             </form>
         </div>
-    </div>    
-    <script>   
+    </div>
 
-        const ids = ['nome', 'cap', 'scan', 'status'];
+    <datalist id="status_lista"></datalist>
 
-        ids.forEach(id =>{
-            document.getElementById(id).addEventListener("keydown", function (e) {
-                if (e.key === "Enter") {
-                    e.preventDefault(); // impede submit
-                    criar();        // chama a busca
-                }
-            });             
-        })
+    <script type="module" src="/Biblioteca/assets/JS/criar.js"></script>
 
 
-        document.getElementById("criar").addEventListener("click", async function (e) {
-            const nome = document.getElementById("nome").value;
-            const cap = document.getElementById("cap").value;
-            const scan = document.getElementById("scan").value;
-            const status = document.getElementById("status").value;
-            
-            const Form = new FormData();
-            Form.append('nome', nome);
-            Form.append('cap', cap);
-            Form.append('scan', scan);
-            Form.append('status', status);
-            
-            const response = await fetch("API/Criar.php", {method:"POST", body: Form});
-            
-            let dados = await response.json();
-            
-            console.log(dados)
-            
-            window.location.href="exibir.php?id="+dados.id;   
-        })
-       
-
-    </script>
-
-    <datalist id="lista_status">
-        <?php if(!empty($lista)): foreach($lista as $l): ?>
-            <option value="<?=$l['nome']?>">
-        <?php endforeach; endif; ?>
-    </datalist>
 
 </body>
+
 </html>

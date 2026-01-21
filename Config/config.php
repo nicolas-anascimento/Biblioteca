@@ -4,11 +4,11 @@
         $lista_aberta = ["login.php"];
         $url = basename($_SERVER["PHP_SELF"]);
         if(!in_array($url, $lista_aberta)){
-            header("Location: login.php");
+            header("Location:" . URL_BASE . "/Login/");
         }
     }
 
-    define('URL_BASE', 'Biblioteca');
+    define('URL_BASE', '/Biblioteca');
     session_start();
     if(isset($_COOKIE["Lembrar"]) && !isset($_SESSION["user"])){
         $hash = $_COOKIE["Lembrar"];

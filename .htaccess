@@ -1,1 +1,11 @@
 DirectoryIndex login.php index.php
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^Manga/([0-9]+)$ exibir.php?id=$1 [L,QSA]
+RewriteRule ^Criar/?$ criar.php [L]
+RewriteRule ^Home/?$ index.php [L]
+RewriteRule ^Login/?$ login.php [L]

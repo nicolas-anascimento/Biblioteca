@@ -20,6 +20,10 @@
         }
     }
 
+    if(isset($_SESSION["user"])){
+        header("Location: Home/");
+    }
+
     if($_SERVER["REQUEST_METHOD"] === "POST"){
         
         $nome = $_POST["nome"] ?? '';
@@ -45,7 +49,7 @@
                     $sql = $pdo->prepare("INSERT INTO cookie(id_user, hash, data) VALUE (?, ?, DATE_ADD(NOW(), INTERVAL 1 MONTH))");
                     $sql->execute([$_SESSION["id"], $token_hash]);
 
-                    header("Location: index.php");
+                    header("Location: Home/");
                 } else {
                     $msg = "Senha incorreta";
                 }
@@ -64,8 +68,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="assets/style.css">
-    <link rel="stylesheet" href="assets/style_login.css">
+    <link rel="stylesheet" href="/Biblioteca/assets/CSS/style.css">
+    <link rel="stylesheet" href="/Biblioteca/assets/CSS/style_login.css">
 </head>
 <body>
     <div class="container">

@@ -22,7 +22,7 @@
         if($id <= 0){
             http_response_code(400);
             echo json_encode([
-                'sucesso' => false,
+                'success' => false,
                 'error' => 'ID invalido'
             ]);
             exit;
@@ -31,7 +31,7 @@
         if(!$nome || !$cap || !$scan ){
             http_response_code(500);
             echo json_encode([
-                'sucesso' => false,
+                'success' => false,
                 'error' => 'Campo obrigatorio faltanto'
             ]);
             exit;
@@ -45,7 +45,7 @@
             if(!$status_query){
                 http_response_code(400);
                 echo json_encode([
-                    'sucess' => false,
+                    'success' => false,
                     'error' => 'Status Inválido'
                 ]);
                 exit;
@@ -69,7 +69,7 @@
         http_response_code(500);
 
         echo json_encode([
-            'sucesso' => false,
+            'success' => false,
             'message' => 'Erro interno do servidor',
             'details' => $e->getMessage()
         ]);
