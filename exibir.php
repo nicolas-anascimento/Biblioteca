@@ -49,6 +49,14 @@
             </form>
         </div>
     </div>    
+
+    <datalist id="status_lista">
+        <?php if(!empty($lista)): foreach($lista as $l): ?>
+            <option value="<?=$l['nome']?>">
+        <?php endforeach; endif; ?>
+    </datalist>
+
+
     <script>
         console.log(<?= htmlspecialchars($id) ?>)
         
@@ -115,10 +123,6 @@
         
     </script>
 
-    <datalist id="status_lista">
-        <?php if(!empty($lista)): foreach($lista as $l): ?>
-            <option value="<?=$l['nome']?>">
-        <?php endforeach; endif; ?>
-    </datalist>
+
 </body>
 </html>
